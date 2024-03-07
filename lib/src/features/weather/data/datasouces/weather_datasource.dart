@@ -1,5 +1,6 @@
 import 'package:rock_weather/src/features/weather/data/models/weather_model.dart';
 
-abstract class WeatherDataSouce {
-  Future<WeatherModel> getCurrentWeather(int latitude, int longitude);
+abstract class WeatherDataSource {
+  Future<WeatherModel> getCurrentWeather(double latitude, double longitude);
+  Future<WeatherModel> getForecastWeather(double latitude, double longitude);
 }
