@@ -16,22 +16,6 @@ class WeatherModel extends WeatherEntity {
     this.daily = const [],
   });
 
-  WeatherModel copyWith({
-    double? lat,
-    double? lon,
-    String? timezone,
-    Current? current,
-    List<Daily>? daily,
-  }) {
-    return WeatherModel(
-      lat: lat ?? this.lat,
-      lon: lon ?? this.lon,
-      timezone: timezone ?? this.timezone,
-      current: current ?? this.current,
-      daily: daily ?? this.daily,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'lat': lat,
@@ -87,37 +71,6 @@ class Current {
     this.weather = const [],
   });
 
-  Current copyWith({
-    int? dt,
-    int? sunrise,
-    int? sunset,
-    double? temp,
-    double? feels_like,
-    int? pressure,
-    int? humidity,
-    double? dew_point,
-    int? uvi,
-    int? clouds,
-    int? visibility,
-    double? wind_speed,
-    int? wind_deg,
-    List<Weather>? weather,
-  }) {
-    return Current(
-      dt: dt ?? this.dt,
-      sunrise: sunrise ?? this.sunrise,
-      sunset: sunset ?? this.sunset,
-      temp: temp ?? this.temp,
-      feelsLike: feels_like ?? feelsLike,
-      humidity: humidity ?? this.humidity,
-      clouds: clouds ?? this.clouds,
-      visibility: visibility ?? this.visibility,
-      windSpeed: wind_speed ?? windSpeed,
-      windDeg: wind_deg ?? windDeg,
-      weather: weather ?? this.weather,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'dt': dt,
@@ -170,20 +123,6 @@ class Weather {
     this.description = '',
     this.icon = '',
   });
-
-  Weather copyWith({
-    int? id,
-    String? main,
-    String? description,
-    String? icon,
-  }) {
-    return Weather(
-      id: id ?? this.id,
-      main: main ?? this.main,
-      description: description ?? this.description,
-      icon: icon ?? this.icon,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -241,46 +180,6 @@ class Daily {
     this.pop = 0.0,
     this.rain = 0.0,
   });
-
-  Daily copyWith({
-    int? dt,
-    int? sunrise,
-    int? sunset,
-    int? moonrise,
-    int? moonset,
-    double? moon_phase,
-    Temp? temp,
-    FeelsLike? feels_like,
-    int? pressure,
-    int? humidity,
-    double? dew_point,
-    double? wind_speed,
-    int? wind_deg,
-    double? wind_gust,
-    List<Weather>? weather,
-    int? clouds,
-    double? pop,
-    double? rain,
-    double? uvi,
-  }) {
-    return Daily(
-      dt: dt ?? this.dt,
-      sunrise: sunrise ?? this.sunrise,
-      sunset: sunset ?? this.sunset,
-      moonrise: moonrise ?? this.moonrise,
-      moonset: moonset ?? this.moonset,
-      moon_phase: moon_phase ?? this.moon_phase,
-      temp: temp ?? this.temp,
-      feelsLike: feels_like ?? feelsLike,
-      pressure: pressure ?? this.pressure,
-      humidity: humidity ?? this.humidity,
-      wind_speed: wind_speed ?? this.wind_speed,
-      weather: weather ?? this.weather,
-      clouds: clouds ?? this.clouds,
-      pop: pop ?? this.pop,
-      rain: rain ?? this.rain,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -347,24 +246,6 @@ class Temp {
     this.morn = 0.0,
   });
 
-  Temp copyWith({
-    double? day,
-    double? min,
-    double? max,
-    double? night,
-    double? eve,
-    double? morn,
-  }) {
-    return Temp(
-      day: day ?? this.day,
-      min: min ?? this.min,
-      max: max ?? this.max,
-      night: night ?? this.night,
-      eve: eve ?? this.eve,
-      morn: morn ?? this.morn,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'day': day,
@@ -403,20 +284,6 @@ class FeelsLike {
     this.eve = 0.0,
     this.morn = 0.0,
   });
-
-  FeelsLike copyWith({
-    double? day,
-    double? night,
-    double? eve,
-    double? morn,
-  }) {
-    return FeelsLike(
-      day: day ?? this.day,
-      night: night ?? this.night,
-      eve: eve ?? this.eve,
-      morn: morn ?? this.morn,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
