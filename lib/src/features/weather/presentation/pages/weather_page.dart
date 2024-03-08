@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:rock_weather/src/config/injection/app_injection.dart';
-import 'package:rock_weather/src/features/weather/domain/usecases/current/get_current_weather_usecase.dart';
+import 'package:rock_weather/src/features/weather/presentation/pages/widgets/weather_card_widget.dart';
+import 'package:rock_weather/src/features/weather/presentation/states/weather_state.dart';
+import 'package:rock_weather/src/features/weather/presentation/store/weather_store.dart';
 
-class WeatherPage extends StatelessWidget {
+class WeatherPage extends StatefulWidget {
   const WeatherPage({Key? key}) : super(key: key);
+
+  @override
+  State<WeatherPage> createState() => _WeatherPageState();
+}
+
+class _WeatherPageState extends State<WeatherPage> {
+  final store = getIt<WeatherStore>();
+
+  @override
+  void initState() {
+    store.addListener(() => setState(() {}));
+    store.getWeather();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Colors.redAccent,
         title: const Text(
           'Rock Weather',
           style: TextStyle(
@@ -20,8 +36,10 @@ class WeatherPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              getIt<GetCurrentWeatherUsecase>().call(-23.550520, -46.633308);
+            onPressed: () async {
+              setState(() {
+                store.getWeather();
+              });
             },
             icon: const Icon(
               Icons.refresh,
@@ -35,8 +53,27 @@ class WeatherPage extends StatelessWidget {
   }
 
   Widget _body() {
-    return const Column(
-      children: [],
+    return ListenableBuilder(
+      listenable: store,
+      builder: (_, __) {
+        final state = store.state;
+
+        if (state is ErrorWeather) {
+          return const Center(
+            child: Text('Error, try again later!'),
+          );
+        }
+        if (state is SuccesWeather) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: state.weather.map((e) => WeatherCardWidget(weather: e)).toList(),
+            ),
+          );
+        }
+        return const Center(child: CircularProgressIndicator.adaptive());
+      },
     );
   }
 }

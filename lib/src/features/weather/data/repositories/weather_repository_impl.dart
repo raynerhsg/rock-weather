@@ -17,14 +17,4 @@ class WeatherRepositoryImpl implements WeatherRepository {
       return Left(Exception());
     }
   }
-
-  @override
-  Future<Either<Exception, WeatherEntity>> getForecastWeather(double latitude, double longitude) async {
-    try {
-      final response = await _dataSouce.getForecastWeather(latitude, longitude);
-      return Right(response);
-    } on Exception {
-      return Left(Exception());
-    }
-  }
 }

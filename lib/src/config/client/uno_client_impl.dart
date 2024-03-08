@@ -14,6 +14,7 @@ class UnoClientImpl implements AppClient {
     Map<String, String> params = const {},
   }) async {
     return await uno.get(endpoint, headers: headers, params: params).then((value) {
+      debugPrint(value.data.toString());
       return value;
     }).catchError((e) {
       debugPrint(e.toString());
