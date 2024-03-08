@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:rock_weather/src/features/weather/domain/entities/weather_entity.dart';
 
 class WeatherModel extends WeatherEntity {
-  final double lat;
-  final double lon;
-  final String timezone;
-  final Current current;
-  final List<Daily> daily;
+  final double? lat;
+  final double? lon;
+  final String? timezone;
+  final Current? current;
+  final List<Daily>? daily;
   WeatherModel({
     this.lat = 0.0,
     this.lon = 0.0,
@@ -21,8 +21,8 @@ class WeatherModel extends WeatherEntity {
       'lat': lat,
       'lon': lon,
       'timezone': timezone,
-      'current': current.toMap(),
-      'daily': daily.map((x) => x.toMap()).toList(),
+      'current': current?.toMap(),
+      'daily': daily?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -31,7 +31,8 @@ class WeatherModel extends WeatherEntity {
       lat: (map['lat'].toDouble() ?? 0.0) as double,
       lon: (map['lon'].toDouble() ?? 0.0) as double,
       timezone: (map['timezone'] ?? '') as String,
-      current: Current.fromMap(map['current'] as Map<String, dynamic>),
+      // current: Current.fromMap(map['current'] as Map<String, dynamic>),
+      current: null,
       daily: List<Daily>.from(
         (map['daily'] as List<int>).map<Daily>(
           (x) => Daily.fromMap(x as Map<String, dynamic>),
@@ -46,17 +47,17 @@ class WeatherModel extends WeatherEntity {
 }
 
 class Current {
-  final int dt;
-  final int sunrise;
-  final int sunset;
-  final double temp;
-  final double feelsLike;
-  final int humidity;
-  final int clouds;
-  final int visibility;
-  final double windSpeed;
-  final int windDeg;
-  final List<Weather> weather;
+  final int? dt;
+  final int? sunrise;
+  final int? sunset;
+  final double? temp;
+  final double? feelsLike;
+  final int? humidity;
+  final int? clouds;
+  final int? visibility;
+  final double? windSpeed;
+  final int? windDeg;
+  final List<Weather>? weather;
   Current({
     this.dt = 0,
     this.sunrise = 0,
@@ -83,7 +84,7 @@ class Current {
       'visibility': visibility,
       'wind_speed': windSpeed,
       'wind_deg': windDeg,
-      'weather': weather.map((x) => x.toMap()).toList(),
+      'weather': weather?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -113,10 +114,10 @@ class Current {
 }
 
 class Weather {
-  final int id;
-  final String main;
-  final String description;
-  final String icon;
+  final int? id;
+  final String? main;
+  final String? description;
+  final String? icon;
   Weather({
     this.id = 0,
     this.main = '',
@@ -148,33 +149,33 @@ class Weather {
 }
 
 class Daily {
-  final int dt;
-  final int sunrise;
-  final int sunset;
-  final int moonrise;
-  final int moonset;
-  final double moon_phase;
-  final Temp temp;
-  final FeelsLike feelsLike;
-  final int pressure;
-  final int humidity;
-  final double wind_speed;
-  final List<Weather> weather;
-  final int clouds;
-  final double pop;
-  final double rain;
+  final int? dt;
+  final int? sunrise;
+  final int? sunset;
+  final int? moonrise;
+  final int? moonset;
+  final double? moonPhase;
+  final Temp? temp;
+  final FeelsLike? feelsLike;
+  final int? pressure;
+  final int? humidity;
+  final double? windSpeed;
+  final List<Weather>? weather;
+  final int? clouds;
+  final double? pop;
+  final double? rain;
   Daily({
     this.dt = 0,
     this.sunrise = 0,
     this.sunset = 0,
     this.moonrise = 0,
     this.moonset = 0,
-    this.moon_phase = 0.0,
+    this.moonPhase = 0.0,
     required this.temp,
     required this.feelsLike,
     this.pressure = 0,
     this.humidity = 0,
-    this.wind_speed = 0.0,
+    this.windSpeed = 0.0,
     this.weather = const [],
     this.clouds = 0,
     this.pop = 0.0,
@@ -188,13 +189,13 @@ class Daily {
       'sunset': sunset,
       'moonrise': moonrise,
       'moonset': moonset,
-      'moon_phase': moon_phase,
-      'temp': temp.toMap(),
-      'feels_like': feelsLike.toMap(),
+      'moon_phase': moonPhase,
+      'temp': temp?.toMap(),
+      'feels_like': feelsLike?.toMap(),
       'pressure': pressure,
       'humidity': humidity,
-      'wind_speed': wind_speed,
-      'weather': weather.map((x) => x.toMap()).toList(),
+      'wind_speed': windSpeed,
+      'weather': weather?.map((x) => x.toMap()).toList(),
       'clouds': clouds,
       'pop': pop,
       'rain': rain,
@@ -208,12 +209,12 @@ class Daily {
       sunset: (map['sunset'].toInt() ?? 0) as int,
       moonrise: (map['moonrise'].toInt() ?? 0) as int,
       moonset: (map['moonset'].toInt() ?? 0) as int,
-      moon_phase: (map['moon_phase'].toDouble() ?? 0.0) as double,
+      moonPhase: (map['moon_phase'].toDouble() ?? 0.0) as double,
       temp: Temp.fromMap(map['temp'] as Map<String, dynamic>),
       feelsLike: FeelsLike.fromMap(map['feels_like'] as Map<String, dynamic>),
       pressure: (map['pressure'].toInt() ?? 0) as int,
       humidity: (map['humidity'].toInt() ?? 0) as int,
-      wind_speed: (map['wind_speed'].toDouble() ?? 0.0) as double,
+      windSpeed: (map['wind_speed'].toDouble() ?? 0.0) as double,
       weather: List<Weather>.from(
         (map['weather'] as List<int>).map<Weather>(
           (x) => Weather.fromMap(x as Map<String, dynamic>),
@@ -231,12 +232,12 @@ class Daily {
 }
 
 class Temp {
-  final double day;
-  final double min;
-  final double max;
-  final double night;
-  final double eve;
-  final double morn;
+  final double? day;
+  final double? min;
+  final double? max;
+  final double? night;
+  final double? eve;
+  final double? morn;
   Temp({
     this.day = 0.0,
     this.min = 0.0,
@@ -274,10 +275,10 @@ class Temp {
 }
 
 class FeelsLike {
-  final double day;
-  final double night;
-  final double eve;
-  final double morn;
+  final double? day;
+  final double? night;
+  final double? eve;
+  final double? morn;
   FeelsLike({
     this.day = 0.0,
     this.night = 0.0,
