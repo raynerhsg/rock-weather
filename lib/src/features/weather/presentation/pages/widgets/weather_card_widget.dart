@@ -90,7 +90,7 @@ class _WeatherCardWidgetState extends State<WeatherCardWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         WeatherRowInformationWidget(
-                          title: 'Weather ',
+                          title: 'Weather condition: ',
                           subTitle: '${widget.weather.currentWeather?.weather?[0].main}',
                         ),
                         WeatherRowInformationWidget(

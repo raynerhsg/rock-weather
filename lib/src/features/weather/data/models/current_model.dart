@@ -12,7 +12,7 @@ class CurrentModel {
   final int? humidity;
   final int? clouds;
   final int? visibility;
-  final double? windSpeed;
+  final num? windSpeed;
   final int? windDeg;
   final List<WeatherInformationModel>? weather;
   CurrentModel({
@@ -50,12 +50,12 @@ class CurrentModel {
       dt: map['dt'],
       sunrise: map['sunrise'],
       sunset: map['sunset'],
-      temp: map['temp'] ?? map['temp'].toDouble(),
-      feelsLike: map['feels_like'] ?? map['feels_like'].toDouble(),
+      temp: map['temp'].toDouble(),
+      feelsLike: map['feels_like'].toDouble(),
       humidity: map['humidity'],
       clouds: map['clouds'],
       visibility: map['visibility'],
-      windSpeed: map['wind_speed'] ?? map['wind_speed'].toDouble(),
+      windSpeed: map['wind_speed'].toDouble(),
       windDeg: map['wind_deg'],
       weather: List<WeatherInformationModel>.from(
         (map['weather'] as List<dynamic>).map<WeatherInformationModel>(
@@ -80,7 +80,7 @@ extension CurrentExtension on CurrentModel {
       feelsLike: feelsLike,
       humidity: humidity,
       clouds: visibility,
-      windSpeed: windSpeed,
+      windSpeed: windSpeed?.toDouble(),
       windDeg: windDeg,
       weather: weather,
       visibility: visibility,

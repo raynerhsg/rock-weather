@@ -10,8 +10,8 @@ class WeatherIconLoadingWidget extends StatelessWidget {
       baseColor: const Color(0xff2b2879),
       highlightColor: const Color(0xff2b2c44),
       child: Container(
-        height: 20,
-        width: 20,
+        height: 15,
+        width: 15,
         color: Colors.white,
       ),
     );

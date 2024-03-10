@@ -57,7 +57,7 @@ class WeatherForecastCardWidget extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            WeatherRowInformationWidget(title: 'Weather: ', subTitle: '${daily.weather?[0].main}'),
+            WeatherRowInformationWidget(title: 'Weather condition: ', subTitle: '${daily.weather?[0].main}'),
             WeatherRowInformationWidget(title: 'Min: ', subTitle: ' ${daily.temp?.min?.round()}°'),
             WeatherRowInformationWidget(title: 'Max: ', subTitle: '${daily.temp?.max?.round()}°'),
           ],
