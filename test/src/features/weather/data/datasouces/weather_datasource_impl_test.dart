@@ -1,13 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
-
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rock_weather/src/config/client/app_client.dart';
 import 'package:rock_weather/src/features/weather/data/datasouces/weather_datasource.dart';
 import 'package:rock_weather/src/features/weather/data/datasouces/weather_datasource_impl.dart';
 import 'package:rock_weather/src/features/weather/data/models/weather_model.dart';
-import 'package:uno/uno.dart';
+
+import '../../../../mocks/weather_mock.dart';
 
 class MockAppClient extends Mock implements AppClient {}
 
@@ -20,25 +19,26 @@ void main() {
     dataSource = WeatherDataSourceImpl(appClient);
   });
 
+  setUpAll(() => registerFallbackValue(Uri()));
+
   group('$WeatherDataSource', () {
     test(
       'Should return a Weather from external',
       () async {
         //Arrange
-        final weather = WeatherModel();
 
         final response = Response(
-          headers: {},
-          request: Request(uri: Uri.parse('uri'), method: 'get', headers: {}, timeout: Duration.zero),
-          status: HttpStatus.ok,
-          data: jsonDecode(weather.toJson()),
+          statusCode: 200,
+          requestOptions: RequestOptions(),
+          data: WeatherMock.weatherReponse,
         );
 
-        when(() => appClient.get('endpoint', params: any(named: 'params'))).thenAnswer((invocation) async => response);
+        when(() => appClient.get(any(), query: any(named: 'query'))).thenAnswer((invocation) async => response);
         //Act
-        final result = await dataSource.getCurrentWeather(1, 2);
+        final result = await dataSource.getCurrentWeather(3, 3);
         //Assert
         expect(result, isA<WeatherModel>());
+        verify(() => appClient.get(any(), query: any(named: 'query'))).called(1);
       },
     );
 
@@ -47,10 +47,11 @@ void main() {
       () async {
         //Arrange
 
-        when(() => appClient.get('endpoint', params: any(named: 'params'))).thenThrow(Exception());
+        when(() => appClient.get('endpoint', query: any(named: 'query'))).thenThrow(Exception());
         //Act
         //Assert
         expect(() => dataSource.getCurrentWeather(1, 2), throwsException);
+        verifyNever(() => appClient.get('endpoint', query: any(named: 'query')));
       },
     );
   });

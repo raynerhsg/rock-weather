@@ -15,7 +15,7 @@ class WeatherDataSourceImpl implements WeatherDataSource {
   @override
   Future<WeatherModel> getCurrentWeather(double latitude, double longitude) async {
     try {
-      final params = <String, String>{
+      final query = <String, String>{
         "lat": latitude.toString(),
         "lon": longitude.toString(),
         "appid": WeatherDataUtils.apiKey,
@@ -23,9 +23,9 @@ class WeatherDataSourceImpl implements WeatherDataSource {
         "exclude": "minutely,hourly,alerts",
       };
 
-      final response = await _client.get(WeatherDataUtils.url, params: params);
+      final response = await _client.get(WeatherDataUtils.url, query: query);
 
-      switch (response.status) {
+      switch (response.statusCode) {
         case HttpStatus.ok:
           final json = jsonEncode(response.data);
           return WeatherModel.fromJson(json);

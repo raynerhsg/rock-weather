@@ -1,9 +1,8 @@
-import 'package:uno/uno.dart';
+import 'package:dio/dio.dart';
 
 abstract class AppClient {
   Future<Response> get(
     String endpoint, {
-    Map<String, String> headers = const {},
-    Map<String, String> params = const {},
+    Map<String, String> query = const {},
   });
 }

@@ -1,19 +1,18 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:rock_weather/src/config/client/app_client.dart';
-import 'package:uno/uno.dart';
 
-class UnoClientImpl implements AppClient {
-  final Uno uno;
+class DioClientImpl implements AppClient {
+  final Dio client;
 
-  UnoClientImpl(this.uno);
+  DioClientImpl(this.client);
 
   @override
   Future<Response> get(
     String endpoint, {
-    Map<String, String> headers = const {},
-    Map<String, String> params = const {},
+    Map<String, String> query = const {},
   }) async {
-    return await uno.get(endpoint, headers: headers, params: params).then((value) {
+    return await client.get(endpoint, queryParameters: query).then((value) {
       debugPrint(value.data.toString());
       return value;
     }).catchError((e) {
