@@ -10,8 +10,8 @@ Run project: flutter run
 
 This project is using: 
 
-Dio as cliente
-ChangeNotifier to states
-GetIt as dependecy injection
-State Pattern
-Unit Tests 
+Dio as cliente; 
+ChangeNotifier to states; 
+GetIt as dependecy injection; 
+State Pattern; 
+Unit Tests; 
