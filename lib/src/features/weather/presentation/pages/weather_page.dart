@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rock_weather/src/config/injection/app_injection.dart';
 import 'package:rock_weather/src/features/weather/presentation/pages/widgets/weather_card_widget.dart';
+import 'package:rock_weather/src/features/weather/presentation/pages/widgets/weather_loading_widget.dart';
 import 'package:rock_weather/src/features/weather/presentation/states/weather_state.dart';
 import 'package:rock_weather/src/features/weather/presentation/store/weather_store.dart';
 
@@ -24,8 +25,9 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff1b1b34),
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: const Color(0xff191336),
         title: const Text(
           'Rock Weather',
           style: TextStyle(
@@ -72,7 +74,7 @@ class _WeatherPageState extends State<WeatherPage> {
             ),
           );
         }
-        return const Center(child: CircularProgressIndicator.adaptive());
+        return const WeatherLoadingListWidget();
       },
     );
   }

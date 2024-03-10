@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:rock_weather/src/features/weather/data/models/feels_like_model.dart';
 import 'package:rock_weather/src/features/weather/data/models/temp_model.dart';
 import 'package:rock_weather/src/features/weather/data/models/weather_information_model.dart';
+import 'package:rock_weather/src/features/weather/domain/entities/daily_entity.dart';
 
 class DailyModel {
   final int? dt;
@@ -85,4 +86,30 @@ class DailyModel {
   String toJson() => json.encode(toMap());
 
   factory DailyModel.fromJson(String source) => DailyModel.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+extension DailyListExtension on List<DailyModel> {
+  List<DailyEntity> toEntityList() => map((e) => e.toEntity()).toList();
+}
+
+extension DailyExtension on DailyModel {
+  DailyEntity toEntity() {
+    return DailyEntity(
+      dt: dt,
+      sunrise: sunrise,
+      sunset: sunset,
+      moonrise: moonrise,
+      moonset: moonset,
+      moonPhase: moonPhase,
+      temp: temp?.toEntity(),
+      feelsLike: feelsLike?.toEntity(),
+      pressure: pressure,
+      humidity: humidity,
+      windSpeed: windSpeed,
+      weather: weather?.toEntityList(),
+      clouds: clouds,
+      pop: pop,
+      rain: rain,
+    );
+  }
 }

@@ -4,9 +4,9 @@ class FeelsLikeEntity {
   final double? eve;
   final double? morn;
   FeelsLikeEntity({
-    this.day = 0.0,
-    this.night = 0.0,
-    this.eve = 0.0,
-    this.morn = 0.0,
+    required this.day,
+    required this.night,
+    required this.eve,
+    required this.morn,
   });
 }

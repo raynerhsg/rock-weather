@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:rock_weather/src/features/weather/data/models/weather_information_model.dart';
+import 'package:rock_weather/src/features/weather/domain/entities/current_entity.dart';
 
 class CurrentModel {
   final int? dt;
@@ -67,4 +68,22 @@ class CurrentModel {
   String toJson() => json.encode(toMap());
 
   factory CurrentModel.fromJson(String source) => CurrentModel.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+extension CurrentExtension on CurrentModel {
+  CurrentEntity toEntity() {
+    return CurrentEntity(
+      dt: dt,
+      sunrise: sunrise,
+      sunset: sunset,
+      temp: temp,
+      feelsLike: feelsLike,
+      humidity: humidity,
+      clouds: visibility,
+      windSpeed: windSpeed,
+      windDeg: windDeg,
+      weather: weather,
+      visibility: visibility,
+    );
+  }
 }

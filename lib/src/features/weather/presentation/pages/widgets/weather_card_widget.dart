@@ -1,24 +1,59 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:rock_weather/src/features/weather/domain/entities/weather_entity.dart';
 import 'package:rock_weather/src/features/weather/presentation/pages/weather_forecast_page.dart';
+import 'package:rock_weather/src/features/weather/presentation/pages/widgets/weather_icon_loading_widget.dart';
+import 'package:rock_weather/src/features/weather/presentation/pages/widgets/weather_row_information_widget.dart';
 
-class WeatherCardWidget extends StatelessWidget {
+class WeatherCardWidget extends StatefulWidget {
   final WeatherEntity weather;
   const WeatherCardWidget({Key? key, required this.weather}) : super(key: key);
 
   @override
+  State<WeatherCardWidget> createState() => _WeatherCardWidgetState();
+}
+
+class _WeatherCardWidgetState extends State<WeatherCardWidget> {
+  String? cityName = '';
+  @override
+  void initState() {
+    getCityName();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final icon = weather.currentWeather?.weather?.first.icon;
+    final icon = widget.weather.currentWeather?.weather?.first.icon;
+
+    if (cityName?.isEmpty == true) {
+      return const SizedBox.shrink();
+    }
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const WeatherForecastPage()));
+      onTap: () async {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => WeatherForecastPage(
+              weather: widget.weather,
+              cityName: cityName,
+            ),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 20),
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: Colors.redAccent.withOpacity(0.6),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
+              colors: [
+                Color(0xff2b2879),
+                Color(0xff34356b),
+                Color(0xff2b2c44),
+              ],
+            ),
           ),
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -26,55 +61,59 @@ class WeatherCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.network(
-                      'https://openweathermap.org/img/wn/$icon.png',
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return const Center(child: CircularProgressIndicator.adaptive());
-                      },
-                    ),
-                    const SizedBox(width: 16),
                     Text(
-                      weather.zone ?? '',
+                      cityName ?? '-',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
-                    const Spacer(),
                     Text(
-                      '${weather.currentWeather?.temp}°',
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                      '${widget.weather.currentWeather?.temp?.round()}°',
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  'Thermal sensation: ${weather.currentWeather?.feelsLike}°',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black38,
-                  ),
-                ),
-                Text(
-                  'humidity: ${weather.currentWeather?.humidity}%',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black38,
-                  ),
-                ),
-                Text(
-                  'Wind speed: ${weather.currentWeather?.windSpeed}km/h',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black38,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        WeatherRowInformationWidget(
+                          title: 'Weather ',
+                          subTitle: '${widget.weather.currentWeather?.weather?[0].main}',
+                        ),
+                        WeatherRowInformationWidget(
+                          title: 'Feels like: ',
+                          subTitle: '${widget.weather.currentWeather?.feelsLike?.round()}°',
+                        ),
+                        WeatherRowInformationWidget(
+                          title: 'Humidity: ',
+                          subTitle: '${widget.weather.currentWeather?.humidity}%',
+                        ),
+                        WeatherRowInformationWidget(
+                          title: 'Wind speed: ',
+                          subTitle: ' ${widget.weather.currentWeather?.windSpeed}km/h',
+                        ),
+                      ],
+                    ),
+                    CachedNetworkImage(
+                      imageUrl: 'https://openweathermap.org/img/wn/$icon.png',
+                      height: 80,
+                      width: 80,
+                      placeholder: (context, url) => const WeatherIconLoadingWidget(),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -82,5 +121,14 @@ class WeatherCardWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> getCityName() async {
+    final lat = widget.weather.latitude!;
+    final lon = widget.weather.longitude!;
+    final placeMark = await placemarkFromCoordinates(lat, lon);
+    setState(() {
+      cityName = placeMark.first.locality;
+    });
   }
 }

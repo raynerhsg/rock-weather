@@ -4,7 +4,7 @@ import 'package:rock_weather/src/features/weather/data/models/current_model.dart
 import 'package:rock_weather/src/features/weather/data/models/daily_model.dart';
 import 'package:rock_weather/src/features/weather/domain/entities/weather_entity.dart';
 
-class WeatherModel extends WeatherEntity {
+class WeatherModel {
   final double? lat;
   final double? lon;
   final String? timezone;
@@ -16,7 +16,7 @@ class WeatherModel extends WeatherEntity {
     this.timezone = '',
     this.current,
     this.daily = const [],
-  }) : super(latitude: lat, longitude: lon, zone: timezone, currentWeather: current, dailyWeather: daily);
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -45,4 +45,16 @@ class WeatherModel extends WeatherEntity {
   String toJson() => json.encode(toMap());
 
   factory WeatherModel.fromJson(String source) => WeatherModel.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+extension WeatherExtension on WeatherModel {
+  WeatherEntity toEntity() {
+    return WeatherEntity(
+      latitude: lat,
+      longitude: lon,
+      zone: timezone,
+      currentWeather: current?.toEntity(),
+      dailyWeather: daily?.toEntityList(),
+    );
+  }
 }

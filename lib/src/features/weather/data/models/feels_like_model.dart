@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:rock_weather/src/features/weather/domain/entities/feels_like_entity.dart';
+
 class FeelsLikeModel {
   final double? day;
   final double? night;
@@ -33,4 +35,15 @@ class FeelsLikeModel {
   String toJson() => json.encode(toMap());
 
   factory FeelsLikeModel.fromJson(String source) => FeelsLikeModel.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+extension FeelsLikeExtension on FeelsLikeModel {
+  FeelsLikeEntity toEntity() {
+    return FeelsLikeEntity(
+      day: day,
+      night: night,
+      eve: eve,
+      morn: morn,
+    );
+  }
 }

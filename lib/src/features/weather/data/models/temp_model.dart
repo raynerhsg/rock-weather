@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:rock_weather/src/features/weather/domain/entities/temp_entity.dart';
+
 class TempModel {
   final double? day;
   final double? min;
@@ -41,4 +43,17 @@ class TempModel {
   String toJson() => json.encode(toMap());
 
   factory TempModel.fromJson(String source) => TempModel.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+extension TemExtension on TempModel {
+  TempEntity toEntity() {
+    return TempEntity(
+      day: day,
+      min: min,
+      max: max,
+      night: night,
+      eve: eve,
+      morn: morn,
+    );
+  }
 }

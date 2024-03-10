@@ -13,16 +13,16 @@ class CurrentEntity {
   final int? windDeg;
   final List<WeatherInformationModel>? weather;
   CurrentEntity({
-    this.dt = 0,
-    this.sunrise = 0,
-    this.sunset = 0,
-    this.temp = 0.0,
-    this.feelsLike = 0.0,
-    this.humidity = 0,
-    this.clouds = 0,
-    this.visibility = 0,
-    this.windSpeed = 0.0,
-    this.windDeg = 0,
-    this.weather = const [],
+    required this.dt,
+    required this.sunrise,
+    required this.sunset,
+    required this.temp,
+    required this.feelsLike,
+    required this.humidity,
+    required this.clouds,
+    required this.visibility,
+    required this.windSpeed,
+    required this.windDeg,
+    required this.weather,
   });
 }

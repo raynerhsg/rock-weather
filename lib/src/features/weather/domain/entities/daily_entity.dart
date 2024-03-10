@@ -1,6 +1,7 @@
-import 'package:rock_weather/src/features/weather/data/models/feels_like_model.dart';
-import 'package:rock_weather/src/features/weather/data/models/temp_model.dart';
-import 'package:rock_weather/src/features/weather/data/models/weather_information_model.dart';
+import 'package:intl/intl.dart';
+import 'package:rock_weather/src/features/weather/domain/entities/feels_like_entity.dart';
+import 'package:rock_weather/src/features/weather/domain/entities/temp_entity.dart';
+import 'package:rock_weather/src/features/weather/domain/entities/weather_information_entity.dart';
 
 class DailyEntity {
   final int? dt;
@@ -9,30 +10,36 @@ class DailyEntity {
   final int? moonrise;
   final int? moonset;
   final num? moonPhase;
-  final TempModel? temp;
-  final FeelsLikeModel? feelsLike;
+  final TempEntity? temp;
+  final FeelsLikeEntity? feelsLike;
   final int? pressure;
   final int? humidity;
   final double? windSpeed;
-  final List<WeatherInformationModel>? weather;
+  final List<WeatherInformationEntity>? weather;
   final int? clouds;
   final num? pop;
   final num? rain;
   DailyEntity({
-    this.dt = 0,
-    this.sunrise = 0,
-    this.sunset = 0,
-    this.moonrise = 0,
-    this.moonset = 0,
-    this.moonPhase = 0.0,
-    this.temp,
-    this.feelsLike,
-    this.pressure = 0,
-    this.humidity = 0,
-    this.windSpeed = 0.0,
-    this.weather = const [],
-    this.clouds = 0,
-    this.pop = 0.0,
-    this.rain = 0.0,
+    required this.dt,
+    required this.sunrise,
+    required this.sunset,
+    required this.moonrise,
+    required this.moonset,
+    required this.moonPhase,
+    required this.temp,
+    required this.feelsLike,
+    required this.pressure,
+    required this.humidity,
+    required this.windSpeed,
+    required this.weather,
+    required this.clouds,
+    required this.pop,
+    required this.rain,
   });
+
+  String get day {
+    final date = DateTime.fromMillisecondsSinceEpoch(dt! * 1000);
+    final dateConverted = DateFormat(DateFormat.ABBR_WEEKDAY).format(date);
+    return dateConverted;
+  }
 }

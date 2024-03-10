@@ -1,17 +1,38 @@
-import 'package:rock_weather/src/features/weather/data/models/current_model.dart';
-import 'package:rock_weather/src/features/weather/data/models/daily_model.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:rock_weather/src/features/weather/domain/entities/current_entity.dart';
+import 'package:rock_weather/src/features/weather/domain/entities/daily_entity.dart';
 
 class WeatherEntity {
   final double? latitude;
   final double? longitude;
   final String? zone;
-  final CurrentModel? currentWeather;
-  final List<DailyModel>? dailyWeather;
+  final String? cityName;
+  final CurrentEntity? currentWeather;
+  final List<DailyEntity>? dailyWeather;
   WeatherEntity({
-    this.latitude = 0.0,
-    this.longitude = 0.0,
-    this.zone = '',
-    this.currentWeather,
-    this.dailyWeather = const [],
+    required this.latitude,
+    required this.longitude,
+    required this.zone,
+    required this.currentWeather,
+    required this.dailyWeather,
+    this.cityName,
   });
+
+  WeatherEntity copyWith({
+    String? cityName,
+    double? latitude,
+    double? longitude,
+    String? zone,
+    CurrentEntity? currentWeather,
+    List<DailyEntity>? dailyWeather,
+  }) {
+    return WeatherEntity(
+      cityName: cityName ?? cityName,
+      latitude: latitude ?? latitude,
+      longitude: longitude ?? longitude,
+      zone: zone ?? zone,
+      currentWeather: currentWeather ?? currentWeather,
+      dailyWeather: dailyWeather ?? dailyWeather,
+    );
+  }
 }
