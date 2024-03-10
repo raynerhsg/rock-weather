@@ -43,6 +43,7 @@ class _WeatherCardWidgetState extends State<WeatherCardWidget> {
       child: Padding(
         padding: const EdgeInsets.only(top: 20),
         child: Container(
+          key: const Key('WeatherCardWidget'),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             gradient: LinearGradient(

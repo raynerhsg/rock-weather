@@ -38,6 +38,7 @@ class _WeatherPageState extends State<WeatherPage> {
         ),
         actions: [
           IconButton(
+            key: const Key('RefreshButton'),
             onPressed: () async {
               setState(() {
                 store.getWeather();

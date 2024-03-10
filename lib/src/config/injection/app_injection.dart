@@ -23,6 +23,6 @@ class AppInjection {
     //Repositories
     getIt.registerLazySingleton<WeatherRepository>(() => WeatherRepositoryImpl(getIt()));
     //Usecases
-    getIt.registerLazySingleton<GetWeatherUsecase>(() => GetWeatherUsecaseImpl(getIt()));
+    getIt.registerLazySingleton<GetWeatherUseCase>(() => GetWeatherUsecaseImpl(getIt()));
   }
 }

@@ -6,7 +6,7 @@ import 'package:rock_weather/src/features/weather/domain/repositories/weather_re
 import 'package:rock_weather/src/features/weather/domain/shared/weather_utils.dart';
 import 'package:rock_weather/src/features/weather/domain/usecases/current/get_weather_usecase.dart';
 
-class GetWeatherUsecaseImpl implements GetWeatherUsecase {
+class GetWeatherUsecaseImpl implements GetWeatherUseCase {
   final WeatherRepository _repository;
 
   GetWeatherUsecaseImpl(this._repository);

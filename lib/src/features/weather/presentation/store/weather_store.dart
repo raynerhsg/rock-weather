@@ -3,7 +3,7 @@ import 'package:rock_weather/src/features/weather/domain/usecases/current/get_we
 import 'package:rock_weather/src/features/weather/presentation/states/weather_state.dart';
 
 class WeatherStore extends ChangeNotifier {
-  final GetWeatherUsecase _usecase;
+  final GetWeatherUseCase _usecase;
 
   WeatherStore(this._usecase);
 
