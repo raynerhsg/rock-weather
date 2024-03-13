@@ -24,13 +24,13 @@ void main() {
       () async {
         //Arrange
         final weather = WeatherModel();
-        when(() => dataSource.getCurrentWeather(12, 12)).thenAnswer((invocation) async => weather);
+        when(() => dataSource.getWeather(12, 12)).thenAnswer((invocation) async => weather);
         //Act
         final result = await repository.getCurrentWeather(12, 12);
         //Assert
         expect(result.isRight(), isTrue);
         expect(result.fold(id, id), isA<WeatherEntity>());
-        verify(() => dataSource.getCurrentWeather(12, 12)).called(1);
+        verify(() => dataSource.getWeather(12, 12)).called(1);
       },
     );
 
@@ -38,13 +38,13 @@ void main() {
       'Should reutnr an Exception from data source',
       () async {
         //Arrange
-        when(() => dataSource.getCurrentWeather(12, 12)).thenThrow(Exception());
+        when(() => dataSource.getWeather(12, 12)).thenThrow(Exception());
         //Act
         final result = await repository.getCurrentWeather(12, 12);
         //Assert
         expect(result.isLeft(), isTrue);
         expect(result.fold(id, id), isA<Exception>());
-        verify(() => dataSource.getCurrentWeather(12, 12)).called(1);
+        verify(() => dataSource.getWeather(12, 12)).called(1);
       },
     );
   });

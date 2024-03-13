@@ -6,13 +6,18 @@ import 'package:rock_weather/src/config/injection/app_injection.dart';
 import 'package:rock_weather/src/features/weather/presentation/pages/weather_page.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  runZonedGuarded<Future<void>>(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
 
-  runZoned(() {
-    AppInjection.initInjection();
-  });
+      await AppInjection.initInjection();
 
-  runApp(const MyApp());
+      runApp(const MyApp());
+    },
+    (error, stack) {
+      debugPrint(error.toString());
+    },
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -23,11 +28,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(

@@ -47,3 +47,14 @@ extension FeelsLikeExtension on FeelsLikeModel {
     );
   }
 }
+
+extension FeelsLikeEntityExtension on FeelsLikeEntity {
+  FeelsLikeModel toModel() {
+    return FeelsLikeModel(
+      day: day,
+      night: night,
+      eve: eve,
+      morn: morn,
+    );
+  }
+}

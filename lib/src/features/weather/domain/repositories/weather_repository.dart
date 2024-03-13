@@ -3,4 +3,6 @@ import 'package:rock_weather/src/features/weather/domain/entities/weather_entity
 
 abstract class WeatherRepository {
   Future<Either<Exception, WeatherEntity>> getCurrentWeather(double latitude, double longitude);
+  Future<Either<Exception, bool>> saveCurrentWeather(List<WeatherEntity> list);
+  Future<Either<Exception, List<WeatherEntity>>> getLocaltWeather();
 }

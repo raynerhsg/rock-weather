@@ -8,6 +8,7 @@ class WeatherModel {
   final double? lat;
   final double? lon;
   final String? timezone;
+  final String? cityName;
   final CurrentModel? current;
   final List<DailyModel>? daily;
   WeatherModel({
@@ -16,6 +17,7 @@ class WeatherModel {
     this.timezone = '',
     this.current,
     this.daily = const [],
+    this.cityName,
   });
 
   Map<String, dynamic> toMap() {
@@ -55,6 +57,19 @@ extension WeatherExtension on WeatherModel {
       zone: timezone,
       currentWeather: current?.toEntity(),
       dailyWeather: daily?.toEntityList(),
+    );
+  }
+}
+
+extension WeatherModelExtension on WeatherEntity {
+  WeatherModel toModel() {
+    return WeatherModel(
+      lat: latitude,
+      lon: longitude,
+      timezone: zone,
+      cityName: cityName,
+      current: currentWeather?.toModel(),
+      daily: dailyWeather?.map((e) => e.toModel()).toList(),
     );
   }
 }

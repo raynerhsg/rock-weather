@@ -57,3 +57,16 @@ extension TemExtension on TempModel {
     );
   }
 }
+
+extension TempEntityExtension on TempEntity {
+  TempModel toModel() {
+    return TempModel(
+      day: day,
+      min: min,
+      max: max,
+      night: night,
+      eve: eve,
+      morn: morn,
+    );
+  }
+}

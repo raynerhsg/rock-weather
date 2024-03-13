@@ -113,3 +113,25 @@ extension DailyExtension on DailyModel {
     );
   }
 }
+
+extension DailyEntityExtension on DailyEntity {
+  DailyModel toModel() {
+    return DailyModel(
+      dt: dt,
+      sunrise: sunrise,
+      sunset: sunset,
+      moonrise: moonrise,
+      moonset: moonset,
+      moonPhase: moonPhase,
+      temp: temp?.toModel(),
+      feelsLike: feelsLike?.toModel(),
+      pressure: pressure,
+      humidity: humidity,
+      windSpeed: windSpeed,
+      weather: weather?.map((e) => e.toModel()).toList(),
+      clouds: clouds,
+      pop: pop,
+      rain: rain,
+    );
+  }
+}

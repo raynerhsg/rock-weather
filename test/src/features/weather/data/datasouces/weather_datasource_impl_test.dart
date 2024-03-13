@@ -35,7 +35,7 @@ void main() {
 
         when(() => appClient.get(any(), query: any(named: 'query'))).thenAnswer((invocation) async => response);
         //Act
-        final result = await dataSource.getCurrentWeather(3, 3);
+        final result = await dataSource.getWeather(3, 3);
         //Assert
         expect(result, isA<WeatherModel>());
         verify(() => appClient.get(any(), query: any(named: 'query'))).called(1);
@@ -50,7 +50,7 @@ void main() {
         when(() => appClient.get('endpoint', query: any(named: 'query'))).thenThrow(Exception());
         //Act
         //Assert
-        expect(() => dataSource.getCurrentWeather(1, 2), throwsException);
+        expect(() => dataSource.getWeather(1, 2), throwsException);
         verifyNever(() => appClient.get('endpoint', query: any(named: 'query')));
       },
     );

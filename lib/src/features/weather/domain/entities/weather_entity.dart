@@ -27,12 +27,12 @@ class WeatherEntity {
     List<DailyEntity>? dailyWeather,
   }) {
     return WeatherEntity(
-      cityName: cityName ?? cityName,
-      latitude: latitude ?? latitude,
-      longitude: longitude ?? longitude,
-      zone: zone ?? zone,
-      currentWeather: currentWeather ?? currentWeather,
-      dailyWeather: dailyWeather ?? dailyWeather,
+      cityName: cityName ?? this.cityName,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      zone: zone ?? this.zone,
+      currentWeather: currentWeather ?? this.currentWeather,
+      dailyWeather: dailyWeather ?? this.dailyWeather,
     );
   }
 }

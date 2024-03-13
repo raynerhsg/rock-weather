@@ -52,3 +52,14 @@ extension WeatherInformationExtension on WeatherInformationModel {
     );
   }
 }
+
+extension WeatherInformationEntityExtension on WeatherInformationEntity {
+  WeatherInformationModel toModel() {
+    return WeatherInformationModel(
+      id: id,
+      main: main,
+      description: description,
+      icon: icon,
+    );
+  }
+}

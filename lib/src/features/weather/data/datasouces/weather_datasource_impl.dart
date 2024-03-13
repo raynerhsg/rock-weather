@@ -3,17 +3,21 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:rock_weather/src/config/client/app_client.dart';
+import 'package:rock_weather/src/config/local/app_local.dart';
 import 'package:rock_weather/src/features/weather/data/datasouces/weather_datasource.dart';
 import 'package:rock_weather/src/features/weather/data/models/weather_model.dart';
 import 'package:rock_weather/src/features/weather/data/shared/weather_data_utils.dart';
 
 class WeatherDataSourceImpl implements WeatherDataSource {
   final AppClient _client;
+  final AppLocal _local;
 
-  WeatherDataSourceImpl(this._client);
+  WeatherDataSourceImpl(this._client, this._local);
+
+  final weatherKey = 'WAETHER_LOCAL';
 
   @override
-  Future<WeatherModel> getCurrentWeather(double latitude, double longitude) async {
+  Future<WeatherModel> getWeather(double latitude, double longitude) async {
     try {
       final query = <String, String>{
         "lat": latitude.toString(),
@@ -34,6 +38,31 @@ class WeatherDataSourceImpl implements WeatherDataSource {
       }
     } catch (e) {
       debugPrint(e.toString());
+
+      throw Exception();
+    }
+  }
+
+  @override
+  Future<bool> saveWeather(List<WeatherModel> list) {
+    try {
+      final json = list.map((e) => e.toJson()).toList();
+      return _local.setStringList(weatherKey, json);
+    } catch (e) {
+      debugPrint(e.toString());
+
+      throw Exception();
+    }
+  }
+
+  @override
+  Future<List<WeatherModel>> getLocalWeather() {
+    try {
+      final json = _local.getStringList(weatherKey);
+      return Future.value(json?.map((e) => WeatherModel.fromJson(e)).toList());
+    } catch (e) {
+      debugPrint(e.toString());
+
       throw Exception();
     }
   }

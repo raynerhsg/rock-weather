@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:rock_weather/src/features/weather/domain/entities/weather_entity.dart';
 import 'package:rock_weather/src/features/weather/presentation/pages/weather_forecast_page.dart';
 import 'package:rock_weather/src/features/weather/presentation/pages/widgets/weather_icon_loading_widget.dart';
@@ -15,10 +14,8 @@ class WeatherCardWidget extends StatefulWidget {
 }
 
 class _WeatherCardWidgetState extends State<WeatherCardWidget> {
-  String? cityName = '';
   @override
   void initState() {
-    getCityName();
     super.initState();
   }
 
@@ -26,16 +23,16 @@ class _WeatherCardWidgetState extends State<WeatherCardWidget> {
   Widget build(BuildContext context) {
     final icon = widget.weather.currentWeather?.weather?.first.icon;
 
-    if (cityName?.isEmpty == true) {
-      return const SizedBox.shrink();
-    }
+    // if (widget.weather.cityName?.isEmpty == true) {
+    //   return const SizedBox.shrink();
+    // }
     return GestureDetector(
       onTap: () async {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => WeatherForecastPage(
               weather: widget.weather,
-              cityName: cityName,
+              cityName: widget.weather.cityName,
             ),
           ),
         );
@@ -65,7 +62,7 @@ class _WeatherCardWidgetState extends State<WeatherCardWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      cityName ?? '-',
+                      widget.weather.cityName ?? '-',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -122,14 +119,5 @@ class _WeatherCardWidgetState extends State<WeatherCardWidget> {
         ),
       ),
     );
-  }
-
-  Future<void> getCityName() async {
-    final lat = widget.weather.latitude!;
-    final lon = widget.weather.longitude!;
-    final placeMark = await placemarkFromCoordinates(lat, lon);
-    setState(() {
-      cityName = placeMark.first.locality;
-    });
   }
 }

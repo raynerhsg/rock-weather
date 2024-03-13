@@ -87,3 +87,21 @@ extension CurrentExtension on CurrentModel {
     );
   }
 }
+
+extension CurrentEntityExtension on CurrentEntity {
+  CurrentModel toModel() {
+    return CurrentModel(
+      dt: dt,
+      sunrise: sunrise,
+      sunset: sunset,
+      temp: temp,
+      feelsLike: feelsLike,
+      humidity: humidity,
+      clouds: visibility,
+      windSpeed: windSpeed,
+      windDeg: windDeg,
+      weather: weather,
+      visibility: visibility,
+    );
+  }
+}
