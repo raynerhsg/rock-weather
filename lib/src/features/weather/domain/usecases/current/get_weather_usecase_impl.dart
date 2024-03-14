@@ -33,11 +33,12 @@ class GetWeatherUsecaseImpl implements GetWeatherUseCase {
                   placeMark.first.locality!.isNotEmpty ? placeMark.first.locality : placeMark.first.administrativeArea,
             );
             weatherList.add(weatherCoppied);
-
-            await Future.delayed(const Duration(milliseconds: 500));
-            await _repository.saveCurrentWeather(weatherList);
           },
         );
+      }
+
+      if (weatherList.length == 4) {
+        await _repository.saveCurrentWeather(weatherList);
       }
 
       return Right(weatherList);
