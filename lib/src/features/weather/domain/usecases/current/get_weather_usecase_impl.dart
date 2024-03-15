@@ -20,29 +20,36 @@ class GetWeatherUsecaseImpl implements GetWeatherUseCase {
     final weatherList = <WeatherEntity>[];
     final isOnline = await _connectivity.isOnline();
     final localWeather = await _repository.getLocaltWeather();
+    final offlineWeather = localWeather.getOrElse(() => <WeatherEntity>[]);
 
     if (isOnline) {
-      for (var value in citiesLocation) {
-        final result = await _repository.getCurrentWeather(value.latitude, value.longitude);
-        result.fold(
-          (error) => Left(error),
+      await Future.forEach(citiesLocation, (element) async {
+        final result = await _repository.getCurrentWeather(
+          element.latitude,
+          element.longitude,
+        );
+
+        await result.fold(
+          (error) async => Left(error),
           (weather) async {
-            final placeMark = await placemarkFromCoordinates(weather.latitude ?? 0, weather.longitude ?? 0);
+            final placeMark = await placemarkFromCoordinates(
+              weather.latitude ?? 0,
+              weather.longitude ?? 0,
+            );
             final weatherCoppied = weather.copyWith(
-              cityName:
-                  placeMark.first.locality!.isNotEmpty ? placeMark.first.locality : placeMark.first.administrativeArea,
+              cityName: placeMark.first.locality!.isNotEmpty
+                  ? placeMark.first.locality
+                  : placeMark.first.administrativeArea,
             );
             weatherList.add(weatherCoppied);
           },
         );
-      }
+      });
 
-      if (weatherList.length == 4) {
-        await _repository.saveCurrentWeather(weatherList);
-      }
+      await _repository.saveCurrentWeather(weatherList);
 
       return Right(weatherList);
     }
-    return Right(localWeather.getOrElse(() => []));
+    return Right(offlineWeather);
   }
 }

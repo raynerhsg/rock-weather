@@ -50,16 +50,19 @@ class WeatherDataSourceImpl implements WeatherDataSource {
       return _local.setStringList(weatherKey, json);
     } catch (e) {
       debugPrint(e.toString());
-
       throw Exception();
     }
   }
 
   @override
-  Future<List<WeatherModel>> getLocalWeather() {
+  List<WeatherModel> getLocalWeather() {
     try {
       final json = _local.getStringList(weatherKey);
-      return Future.value(json?.map((e) => WeatherModel.fromJson(e)).toList());
+      if (json != null) {
+        print('JSON => ${json[0]}');
+        return json.map((e) => WeatherModel.fromJson(e)).toList();
+      }
+      return <WeatherModel>[];
     } catch (e) {
       debugPrint(e.toString());
 
