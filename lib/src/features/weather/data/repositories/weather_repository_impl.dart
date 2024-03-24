@@ -10,8 +10,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
   WeatherRepositoryImpl(this._dataSouce);
 
   @override
-  Future<Either<Exception, WeatherEntity>> getCurrentWeather(
-      double latitude, double longitude) async {
+  Future<Either<Exception, WeatherEntity>> getCurrentWeather(double latitude, double longitude) async {
     try {
       final response = await _dataSouce.getWeather(latitude, longitude);
       return Right(response.toEntity());
@@ -21,11 +20,9 @@ class WeatherRepositoryImpl implements WeatherRepository {
   }
 
   @override
-  Future<Either<Exception, bool>> saveCurrentWeather(
-      List<WeatherEntity> list) async {
+  Future<Either<Exception, bool>> saveCurrentWeather(List<WeatherEntity> list) async {
     try {
-      final response =
-          await _dataSouce.saveWeather(list.map((e) => e.toModel()).toList());
+      final response = await _dataSouce.saveWeather(list.map((e) => e.toModel()).toList());
       return Right(response);
     } on Exception {
       return Left(Exception());
@@ -33,7 +30,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
   }
 
   @override
-  Future<Either<Exception, List<WeatherEntity>>> getLocaltWeather() async {
+  Future<Either<Exception, List<WeatherEntity>>> getLocalWeather() async {
     try {
       final response = _dataSouce.getLocalWeather();
       return Right(response.map((e) => e.toEntity()).toList());

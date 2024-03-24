@@ -8,6 +8,7 @@ import 'package:rock_weather/src/config/connectivity/app_connectivity_impl.dart'
 import 'package:rock_weather/src/config/connectivity/app_connectivy.dart';
 import 'package:rock_weather/src/config/local/app_local.dart';
 import 'package:rock_weather/src/config/local/app_local_impl.dart';
+import 'package:rock_weather/src/config/utils/placemark/placemark_utils.dart';
 import 'package:rock_weather/src/features/weather/data/datasouces/weather_datasource.dart';
 import 'package:rock_weather/src/features/weather/data/datasouces/weather_datasource_impl.dart';
 import 'package:rock_weather/src/features/weather/data/repositories/weather_repository_impl.dart';
@@ -26,6 +27,8 @@ mixin AppInjection {
     getIt.registerLazySingleton(() => Dio());
     getIt.registerLazySingleton<Connectivity>(() => Connectivity());
 
+    getIt.registerLazySingleton<PlaceMarkUtils>(() => PlaceMarkUtilsImpl());
+
     getIt.registerLazySingleton<WeatherStore>(() => WeatherStore(getIt()));
 
     getIt.registerLazySingleton<AppClient>(() => DioClientImpl(getIt()));
@@ -41,7 +44,7 @@ mixin AppInjection {
     getIt.registerLazySingleton<WeatherRepository>(() => WeatherRepositoryImpl(getIt()));
 
     //Usecases
-    getIt.registerLazySingleton<GetWeatherUseCase>(() => GetWeatherUsecaseImpl(getIt(), getIt()));
+    getIt.registerLazySingleton<GetWeatherUseCase>(() => GetWeatherUsecaseImpl(getIt(), getIt(), getIt()));
 
     final prefs = await SharedPreferences.getInstance();
 

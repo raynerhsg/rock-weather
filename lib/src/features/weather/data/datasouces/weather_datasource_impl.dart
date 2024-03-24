@@ -59,13 +59,11 @@ class WeatherDataSourceImpl implements WeatherDataSource {
     try {
       final json = _local.getStringList(weatherKey);
       if (json != null) {
-        print('JSON => ${json[0]}');
         return json.map((e) => WeatherModel.fromJson(e)).toList();
       }
       return <WeatherModel>[];
     } catch (e) {
       debugPrint(e.toString());
-
       throw Exception();
     }
   }
