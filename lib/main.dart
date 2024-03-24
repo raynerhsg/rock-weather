@@ -2,15 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:rock_weather/src/config/injection/app_injection.dart';
 import 'package:rock_weather/src/features/weather/presentation/pages/weather_page.dart';
+
+GetIt getIt = GetIt.instance;
 
 void main() {
   runZonedGuarded<Future<void>>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
 
-      await AppInjection.initInjection();
+      await AppInjection.initInjection(getIt);
 
       runApp(const MyApp());
     },

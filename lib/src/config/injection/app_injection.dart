@@ -18,10 +18,8 @@ import 'package:rock_weather/src/features/weather/domain/usecases/current/get_we
 import 'package:rock_weather/src/features/weather/presentation/store/weather_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final getIt = GetIt.instance;
-
 mixin AppInjection {
-  static Future<void> initInjection() async {
+  static Future<void> initInjection(GetIt getIt) async {
     WidgetsFlutterBinding.ensureInitialized();
 
     getIt.registerLazySingleton(() => Dio());

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rock_weather/src/config/injection/app_injection.dart';
+import 'package:rock_weather/main.dart';
 import 'package:rock_weather/src/features/weather/domain/entities/weather_entity.dart';
 import 'package:rock_weather/src/features/weather/presentation/pages/weather_search_widget.dart';
 import 'package:rock_weather/src/features/weather/presentation/pages/widgets/weather_card_widget.dart';
@@ -33,6 +33,7 @@ class _WeatherPageState extends State<WeatherPage> {
         backgroundColor: const Color(0xff191336),
         title: const Text(
           'Rock Weather',
+          key: Key('PageTitle'),
           style: TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -66,7 +67,10 @@ class _WeatherPageState extends State<WeatherPage> {
 
         if (state is ErrorWeather) {
           return const Center(
-            child: Text('Error, try again later!'),
+            child: Text(
+              'Error, try again later!',
+              key: Key('ErrorText'),
+            ),
           );
         }
 
@@ -99,6 +103,7 @@ class _WeatherPageState extends State<WeatherPage> {
       padding: EdgeInsets.only(top: 32.0),
       child: Text(
         'No data found!',
+        key: Key('EmptyDataText'),
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,

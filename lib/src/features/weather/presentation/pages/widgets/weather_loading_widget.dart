@@ -8,6 +8,7 @@ class WeatherLoadingListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
+      key: const Key('LoadingWidget'),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       child: Shimmer.fromColors(
         baseColor: const Color(0xff2b2879),
