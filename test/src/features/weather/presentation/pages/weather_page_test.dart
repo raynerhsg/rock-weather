@@ -49,7 +49,7 @@ void main() {
 
     expect(pageTitleText, equals('Rock Weather'));
 
-    expect(refreshButton, findsOneWidget);
+    expect(refreshButton, findsOneWidget)
 
     expect(loadingWidget, findsOneWidget);
   });
