@@ -41,9 +41,9 @@ void main() {
 
     final pageTitleText = tester.widget<Text>(pageTitle).data;
 
-    final refreshButton = find.byKey(const Key('RefreshButton'));
+    final refreshButton = find.byKey(const Key('RefreshButton'))
 
-    final loadingWidget = find.byKey(const Key('LoadingWidget'))
+    final loadingWidget = find.byKey(const Key('LoadingWidget'));
 
     expect(pageTitle, findsOneWidget);
 
